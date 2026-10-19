@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div>
       <Router>
-        <div className='min-h-screen bg-gray-900 font-sans'>
+        <div className='min-h-screen bg-black-900 font-sans'>
           <Navbar/>
         <Routes>
           <Route path="/" element={<ProductList/>}/>
