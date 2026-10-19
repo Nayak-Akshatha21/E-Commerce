@@ -29,6 +29,7 @@ export const CartProvider = (props) => {
 
 
   //remove item from the cart
+ 
   const removeFromCart = (productId, removeAll = false) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === productId);
