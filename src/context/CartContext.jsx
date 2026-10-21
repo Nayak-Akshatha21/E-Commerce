@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import { initialProducts } from "../data/product";
 import React from 'react'
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 
 const CartContext = createContext();
@@ -27,32 +27,41 @@ export const CartProvider = (props) => {
     });
   };
 
-
   //remove item from the cart
- 
+
   const removeFromCart = (productId, removeAll = false) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === productId);
 
-      if(!existingItem) return prevCart;
+      if (!existingItem) return prevCart;
 
       if (removeAll || existingItem.quantity === 1) {
         return prevCart.filter(item => item.id !== productId)
       } else {
-        return prevCart.map(item=> item.id === productId ? {...item, quantity: item.quantity - 1}
-          :item)
+        return prevCart.map(item => item.id === productId ? { ...item, quantity: item.quantity - 1 }
+          : item)
       }
     });
   }
 
 
-  const clearCart = () =>{
+  const clearCart = () => {
     setCart([]);
   }
 
+
+  const cartCount = useMemo(() =>
+    cart.reduce((total, item) => total + item.quantity, 0),
+    [cart]);
+
+  const cartTotal = useMemo(() =>
+    cart.reduce((total, item) => total + item.price * item.quantity, 0),
+    [cart]);
+
+    console.log("MY CART", cart);
   return (
     <>
-      <CartContext.Provider value={{ products }}>{props.children}</CartContext.Provider>
+      <CartContext.Provider value={{ products, cart, addToCart, clearCart, removeFromCart, cartTotal, cartCount }}>{props.children}</CartContext.Provider>
     </>
   )
 }

@@ -4,11 +4,14 @@ import { initialProducts } from '../data/product'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { ChevronLeft, Tag, Zap, ShoppingCart } from 'lucide-react';
-
+import { useCart } from '../context/CartContext';
 const ProductDetail = () => {
   // console.log("Data from ID",useParams())
   const { id } = useParams();
   const [product, setProduct] = useState();
+
+  const { addToCart } = useCart();
+
   useEffect(() => {
     setProduct(initialProducts.find(data => data.id == id))
   }, [id])
@@ -21,7 +24,7 @@ const ProductDetail = () => {
   return (
     <>
       <div className="container mx-auto px-4 md:px-8 bg-gray-900 min-h-screen rounded-2xl shadow-2xl py-8 p-6 md:12 border border-gray-800">
-        <Link to={'/home'}>
+        <Link to={'/'}>
           <button className='flex items-center text-gray-400 hover:text-orange-400 transition duration-150 mb-12 font-semibold text-lg cursor-pointer'>
             <ChevronLeft className='w-6 h-6 mr-1' />
             <span>Back to All Products</span>
@@ -60,14 +63,16 @@ const ProductDetail = () => {
               </li>
             </ul>
             <div className='mt-5 space-y-4 flex justify-center items-center flex-col'>
-              <button className='w-full py-3 bg-orange-600 text-white font-bold rounded-full shadow-lg shadow-orange-800/50 cursor-pointer hover:bg-orange-700 
+              <button
+                onClick={() => addToCart(product)}
+                className='w-full py-3 bg-orange-600 text-white font-bold rounded-full shadow-lg shadow-orange-800/50 cursor-pointer hover:bg-orange-700 
           transition duration-300 flex items-center justify-center space-x-3 transform hover:ring-4 hover:ring-pink-600/50 uppercase tracking-wider'>
-                <ShoppingCart className='w-6 h-6' /> 
-                <span>Add to cart</span> 
+                <ShoppingCart className='w-6 h-6' />
+                <span>Add to cart</span>
               </button>
               <Link to={'/'} className='w-full py-3 border-2 border-orange-600 text-orange-400 font-bold rounded-full  cursor-pointer hover:bg-orange-900/50 
           transition duration-300  uppercase tracking-wider text-center'>
-              Keep Shopping
+                Keep Shopping
               </Link>
             </div>
 
