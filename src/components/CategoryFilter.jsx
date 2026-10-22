@@ -6,8 +6,8 @@ const availableCategories = [
   "All", ...new Set(initialProducts.map(p => p.category))
 ]
 
-const CategoryFilter = () => {
-  const selectedCategory = "All";
+const CategoryFilter = ({selectedCategory, setSelectedCategory}) => {
+  // const selectedCategory = "All";
   return (
     <>
       <div className="flex flex-wrap gap-3 border-b border-gray-800 pb-6">
